@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Shorten long URLs with LinkSnip and share them instantly." />
+  <title>LinkSnip — Shorter links, instantly</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+  <header>
+    <div class="logo">⚡ LinkSnip</div>
+    <span class="tagline">Paste long. Get short.</span>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Shorten any URL<br><span class="accent">in one click</span></h1>
+
+      <form method="POST" action="/" class="snip-form">
+        <div class="input-row">
+          <label class="sr-only" for="url-input">Paste a URL to shorten</label>
+          <input
+            id="url-input"
+            type="text"
+            name="url"
+            value="{{ original_url | e }}"
+            placeholder="https://your-very-long-url.com/goes/here"
+            autocomplete="url"
+            spellcheck="false"
+            {% if error %}class="input-error"{% endif %}
+          />
+          <button type="submit">Snip it →</button>
+        </div>
+        {% if error %}
+          <p class="error-msg" role="alert">{{ error }}</p>
+        {% endif %}
+      </form>
+
+      {% if short_url %}
+      <div class="result-card">
+        <p class="result-label">Your short link is ready:</p>
+        <div class="result-row">
+          <a href="{{ short_url }}" target="_blank" rel="noopener noreferrer" class="short-link">{{ short_url }}</a>
+          <button type="button" class="copy-btn" onclick="copyLink('{{ short_url }}', this)">Copy</button>
+        </div>
+      </div>
+      {% endif %}
+    </section>
+
+    {% if recent %}
+    <section class="recent">
+      <h2>Recent links</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Short link</th>
+              <th>Destination</th>
+              <th>Visits</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for link in recent %}
+          <tr>
+            <td>
+              <a href="{{ request.host_url }}{{ link.id }}" target="_blank" class="mono">
+                /{{ link.id }}
+              </a>
+            </td>
+            <td class="dest">{{ link.url[:50] }}{% if link.url|length > 50 %}…{% endif %}</td>
+            <td class="visits">{{ link.visits }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      </div>
+    </section>
+    {% endif %}
+  </main>
+
+  <footer>
+    Built with Flask + SQLite · Made by <a href="/snxth" style="color: var(--accent2); text-decoration: none;">SNXTH</a>
+  </footer>
+
+  <script>
+    function copyLink(url, btn) {
+      navigator.clipboard.writeText(url).then(() => {
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+  </script>
+
+</body>
+</html>

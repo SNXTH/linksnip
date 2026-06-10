@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="LinkSnip 404 page — the requested short link could not be found."/>
+  <title>Link not found — LinkSnip</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Space+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="page-shell">
+  <main class="page-panel">
+    <div class="page-copy">
+      <h1 class="page-title">404</h1>
+      <p class="page-text">The short link you followed doesn’t exist or has already been removed.</p>
+      <a href="/" class="back-btn">← Create a new link</a>
+    </div>
+  </main>
+</body>
+</html>

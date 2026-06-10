@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pdb
+*.pyo
+*.log
+*.sqlite3
+*.db
+*.sqlite
+env/
+.venv/
+venv/
+pip-log.txt
+pip-delete-this-directory.txt
+htmlcov/
+dist/
+build/
+*.egg-info/
+*.egg
+
+# VS Code
+.vscode/
+
+# Mac
+.DS_Store
+
+# Environment files
+.env
+
+# Node
+node_modules/
